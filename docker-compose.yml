@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./src/api
+      dockerfile: Dockerfile
+    volumes:
+      - "./src/api:/app/cloudfile"
+    ports:
+      - 5004:5000
+    environment:
+      - FLASK_ENV=development
+      - APP_SETTINGS=app.config.DevelopmentConfig
+
+  client:
+    build:
+      context: ./src/client
+      dockerfile: Dockerfile
+    volumes:
+      - "./src/client:/app/cloudfile"
+      - "/app/cloudfile/node_modules"
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_BACKEND_SERVICE_URL=http://localhost:5004
+    depends_on:
+      - api
