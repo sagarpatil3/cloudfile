@@ -1,6 +1,8 @@
 import React, { useState, useRef,useMemo,useCallback, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import FileUpload from "./components/FileUpload";
+import "./App.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css";
 
@@ -42,8 +44,11 @@ const App = () => {
   
   return (
     <div className="container mt-4">
-      <h4 className="display-4 text-center mb-4"> Cloud File</h4>
-      <i className="fab fa-react" />
+      <div className='brand'>
+        <FontAwesomeIcon icon="cloud" size="4x"/>
+        <h4 className="display-4 mb-4"> Cloud File</h4>
+      </div>
+      
       <FileUpload onFileUpload={onFileUpload}/>
       
       {rowData.length > 0 ?
