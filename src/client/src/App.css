@@ -3,3 +3,18 @@
   column-gap: 10px;
   justify-content: center;
 }
+.scenario-form{
+  display: flex;
+  padding-left: 4px;
+}
+.scenarios{
+  margin-top: 15px;
+  width: 92%;
+}
+
+.btn-execute{
+  margin-top:14px;
+  margin-left:10px;
+  width:90px;
+  height:40px;
+}

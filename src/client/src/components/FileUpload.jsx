@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Fragment, useState } from 'react'
-import { useEffect } from 'react';
-
+import "./FileUpload.css"
 const FileUpload = ({onFileUpload}) => {
   const [file, setFile] = useState('');
   const [fileName, setFileName] = useState('Choose File');
@@ -43,7 +42,7 @@ const FileUpload = ({onFileUpload}) => {
           <input type="file" className="custom-file-input" id="customFile" onChange={onChange} accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
           <label className="custom-file-label" htmlFor="customFile">{fileName}</label>
         </div>
-        <input type="Submit" value="Upload" className="btn btn-primary btn-block mt-4"/>
+        <input type="Submit" value="Upload" className="btn btn-primary btn-upload"/>
       </form>
     </Fragment>
   )
