@@ -10,8 +10,8 @@ services:
     ports:
       - 5003:5000
     environment:
-      - FLASK_ENV=development
-      - APP_SETTINGS=app.config.DevelopmentConfig
+      - FLASK_ENV=uat
+      - APP_SETTINGS=app.config.uatConfig
 
   client:
     build:

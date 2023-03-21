@@ -1,4 +1,5 @@
 import React, { useState, useRef, useMemo, useCallback, Fragment } from "react";
+import axios from "axios";
 import { AgGridReact } from "ag-grid-react";
 import FileUpload from "./components/FileUpload";
 import Form from "react-bootstrap/Form";
@@ -10,8 +11,9 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 const App = () => {
   const gridRef = useRef();
   const [rowData, setRowData] = useState([]);
-  const [scenario, setScenario] = useState("");
+  const [scenario, setScenario] = useState({});
   const [fileName, setFileName] = useState("");
+  const [msg, setMSG] = useState("");
   const [fileData, setFileData] = useState([]);
   const [showESGGrid, setShowESGGrid] = useState(false);
 
@@ -45,9 +47,27 @@ const App = () => {
     setRowData(data);
   };
 
-  const getESGCalulated = () => {
-    setShowESGGrid(true);
-  };
+  const getESGCalulated = async () => {
+      const data = new FormData();
+      data.append('scenario',scenario);
+      const firstColumnData = ()=>{
+        const columns = Object.keys(fileData[0]);
+        return fileData.map(n=> n[columns[0]]);
+      }
+      data.append('data',firstColumnData());
+      
+      const esgData = await axios({
+        url:`${process.env.REACT_APP_BACKEND_SERVICE_URL}/calculateESG`,
+        method:'POST',
+        data,
+        headers:{
+          "Access-Control-Allow-Origin":"*"
+        }
+        
+      })
+      setMSG(esgData.data);
+
+  }
 
   return (
     <div className="container mt-4">
@@ -81,7 +101,7 @@ const App = () => {
         <div className="scenario-form">
           <Form.Select
             aria-label="Default select example"
-            onChange={setScenario}
+            onChange={(e)=>setScenario(e.currentTarget.value)}
             className="scenarios"
           >
             <option>Select Scenario :</option>
@@ -98,7 +118,7 @@ const App = () => {
       ) : (
         ""
       )}
-
+      <div className="output-data">{msg}</div>
       {showESGGrid ? (
         <div
           className="ag-theme-alpine"
